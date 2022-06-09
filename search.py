@@ -384,16 +384,16 @@ class SearchEngine:
         if goal_node:
             total_search_time = os.times()[0] - self.search_start_time
             stats = SearchStats(sNode.n, StateSpace.n, self.cycle_check_pruned, self.cost_bound_pruned)
-            #print("Solution Found with cost of {} in search time of {} sec".format(goal_node.gval, total_search_time))
-            #print("Nodes expanded = {}, states generated = {}, states cycle check pruned = {}, states cost bound pruned = {}".format(
-            #    sNode.n, StateSpace.n, self.cycle_check_pruned, self.cost_bound_pruned))
+            print("Solution Found with cost of {} in search time of {} sec".format(goal_node.gval, total_search_time))
+            print("Nodes expanded = {}, states generated = {}, states cycle check pruned = {}, states cost bound pruned = {}".format(
+                sNode.n, StateSpace.n, self.cycle_check_pruned, self.cost_bound_pruned))
             return goal_node.state, stats
         else:
             #exited the while without finding goal---search failed
             total_search_time = os.times()[0] - self.search_start_time            
-            #print("Search Failed! No solution found.")
-            #print("Nodes expanded = {}, states generated = {}, states cycle check pruned = {}, states cost bound pruned = {}".format(
-            #    sNode.n, StateSpace.n, self.cycle_check_pruned, self.cost_bound_pruned))
+            print("Search Failed! No solution found.")
+            print("Nodes expanded = {}, states generated = {}, states cycle check pruned = {}, states cost bound pruned = {}".format(
+                sNode.n, StateSpace.n, self.cycle_check_pruned, self.cost_bound_pruned))
             return False, None
 
     def _searchOpen(self, goal_fn, heur_fn, fval_function, costbound):
