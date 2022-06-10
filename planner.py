@@ -78,10 +78,34 @@ def iterative_astar(initial_state, heuristic, weight, timebound=10):
     # HINT: Use os.times()[0] to obtain the clock time. Your code should finish within the timebound.'''
 
     ### IMPLEMENT BELOW ###
+    initial_time = os.times()[0]
+    searching = SearchEngine(strategy='custom', cc_level='full')
+    searching.init_search(initial_state, goal_fn=warehouse_goal_state, heur_fn=heuristic,
+                          fval_function=(lambda sN: fval_fn(sN, weight)))
+    goal, stats = searching.search(timebound=timebound)
+
+    if goal:
+        best = goal
+        time_remaining = timebound - os.times()[0] + initial_time
+        while time_remaining > 0 and weight >= 0:
+            starting_loop = os.times()[0]
+            weight = weight - 0.5
+            searching.init_search(initial_state, goal_fn=warehouse_goal_state, heur_fn=heuristic,
+                                  fval_function=(lambda sN: fval_fn(sN, weight)))
+            goal, stats = searching.search(timebound=time_remaining)
+            if goal:
+                best = goal
+                time_remaining = time_remaining - os.times()[0] + starting_loop
+            else:
+                break
+    else:
+        return False
+
+
 
     ### END OF IMPLEMENTATION ###
 
-    return False
+    return best
 
 
 def heur_alternate(state):
