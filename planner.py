@@ -172,13 +172,16 @@ def is_dead_situation(state):
 
         # Check if Box in a row/column against the Wall that has no goal:
         if x == 0 or x == state.width - 1:
+            indicator = True
             for col in range(state.height):
                 if (x, col) in state.storage:
-                    break
-            return True
+                    indicator = False
+            return indicator
         if y == 0 or y == state.height - 1:
+            indicator = True
             for row in range(state.width):
                 if (row, y) in state.storage:
-                    break
-            return True
+                    indicator = False
+            return indicator
     return False
+
