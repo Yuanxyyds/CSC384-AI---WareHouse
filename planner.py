@@ -123,7 +123,8 @@ def heur_alternate(state):
         return state.height * state.width * (state.height + state.width)
     else:
         distance += heur_manhattan_distance(state)
-        distance += robot_to_boxes_distance(state)
+        # we minus one because last step will result a move in box
+        distance += (robot_to_boxes_distance(state) - 1)
 
     ### END OF IMPLEMENTATION ###
 
